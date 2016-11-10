@@ -1,0 +1,435 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		693C00391DC1483E00E2EA90 /* CreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693C00381DC1483E00E2EA90 /* CreationViewController.swift */; };
+		693C003B1DC14BC900E2EA90 /* StickerOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693C003A1DC14BC900E2EA90 /* StickerOptionsView.swift */; };
+		693C003F1DC14C4B00E2EA90 /* UIColor+HEXString.m in Sources */ = {isa = PBXBuildFile; fileRef = 693C003E1DC14C4B00E2EA90 /* UIColor+HEXString.m */; };
+		693C00411DC14FFB00E2EA90 /* StickersCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693C00401DC14FFB00E2EA90 /* StickersCollectionViewController.swift */; };
+		693C00431DC1500D00E2EA90 /* StickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693C00421DC1500D00E2EA90 /* StickerCollectionViewCell.swift */; };
+		698928ED1DBFCC3700D3D07A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698928EC1DBFCC3700D3D07A /* AppDelegate.swift */; };
+		698928F41DBFCC3700D3D07A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 698928F31DBFCC3700D3D07A /* Assets.xcassets */; };
+		698928F71DBFCC3700D3D07A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 698928F51DBFCC3700D3D07A /* LaunchScreen.storyboard */; };
+		69A87E011DC7CC76002334F9 /* PhotoOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A87E001DC7CC76002334F9 /* PhotoOptionsView.swift */; };
+		69BCAB501DC2A43100F576A9 /* ShareOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BCAB4F1DC2A43100F576A9 /* ShareOptionsView.swift */; };
+		69C7C6341DC1D0D5002162E9 /* UILabel+AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C7C6331DC1D0D5002162E9 /* UILabel+AttributedText.swift */; };
+		BF51C71DA21425327F2B7D6A /* Pods_Yachtify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040A98E71DC0EECE6A56DCE6 /* Pods_Yachtify.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		040A98E71DC0EECE6A56DCE6 /* Pods_Yachtify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yachtify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		693C00381DC1483E00E2EA90 /* CreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationViewController.swift; sourceTree = "<group>"; };
+		693C003A1DC14BC900E2EA90 /* StickerOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerOptionsView.swift; sourceTree = "<group>"; };
+		693C003C1DC14C4A00E2EA90 /* Yachtify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yachtify-Bridging-Header.h"; sourceTree = "<group>"; };
+		693C003D1DC14C4B00E2EA90 /* UIColor+HEXString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HEXString.h"; sourceTree = "<group>"; };
+		693C003E1DC14C4B00E2EA90 /* UIColor+HEXString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HEXString.m"; sourceTree = "<group>"; };
+		693C00401DC14FFB00E2EA90 /* StickersCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersCollectionViewController.swift; sourceTree = "<group>"; };
+		693C00421DC1500D00E2EA90 /* StickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerCollectionViewCell.swift; sourceTree = "<group>"; };
+		698928E91DBFCC3700D3D07A /* Yachtify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yachtify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		698928EC1DBFCC3700D3D07A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		698928F31DBFCC3700D3D07A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		698928F61DBFCC3700D3D07A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		698928F81DBFCC3700D3D07A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		69A87E001DC7CC76002334F9 /* PhotoOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoOptionsView.swift; sourceTree = "<group>"; };
+		69BCAB4F1DC2A43100F576A9 /* ShareOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareOptionsView.swift; sourceTree = "<group>"; };
+		69C7C6331DC1D0D5002162E9 /* UILabel+AttributedText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+AttributedText.swift"; sourceTree = "<group>"; };
+		A0758431278169F42FDB0492 /* Pods-Yachtify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yachtify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yachtify/Pods-Yachtify.debug.xcconfig"; sourceTree = "<group>"; };
+		B712E55E3D8A690F3E447AD9 /* Pods-Yachtify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yachtify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yachtify/Pods-Yachtify.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		698928E61DBFCC3600D3D07A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF51C71DA21425327F2B7D6A /* Pods_Yachtify.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3650D45A9931F84523C767FF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				040A98E71DC0EECE6A56DCE6 /* Pods_Yachtify.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5156D9C59E2FB33A49A69BC4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A0758431278169F42FDB0492 /* Pods-Yachtify.debug.xcconfig */,
+				B712E55E3D8A690F3E447AD9 /* Pods-Yachtify.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		69797E151DD500D800F34D78 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				693C00421DC1500D00E2EA90 /* StickerCollectionViewCell.swift */,
+				693C003A1DC14BC900E2EA90 /* StickerOptionsView.swift */,
+				69A87E001DC7CC76002334F9 /* PhotoOptionsView.swift */,
+				69BCAB4F1DC2A43100F576A9 /* ShareOptionsView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		69797E161DD500F200F34D78 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				693C003D1DC14C4B00E2EA90 /* UIColor+HEXString.h */,
+				693C003E1DC14C4B00E2EA90 /* UIColor+HEXString.m */,
+				69C7C6331DC1D0D5002162E9 /* UILabel+AttributedText.swift */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		69797E171DD5010800F34D78 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				69797E161DD500F200F34D78 /* Utility */,
+				693C00381DC1483E00E2EA90 /* CreationViewController.swift */,
+				693C00401DC14FFB00E2EA90 /* StickersCollectionViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		698928E01DBFCC3600D3D07A = {
+			isa = PBXGroup;
+			children = (
+				698928EB1DBFCC3700D3D07A /* Yachtify */,
+				698928EA1DBFCC3700D3D07A /* Products */,
+				5156D9C59E2FB33A49A69BC4 /* Pods */,
+				3650D45A9931F84523C767FF /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		698928EA1DBFCC3700D3D07A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				698928E91DBFCC3700D3D07A /* Yachtify.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		698928EB1DBFCC3700D3D07A /* Yachtify */ = {
+			isa = PBXGroup;
+			children = (
+				69797E171DD5010800F34D78 /* View Controllers */,
+				69797E151DD500D800F34D78 /* Views */,
+				698928EC1DBFCC3700D3D07A /* AppDelegate.swift */,
+				698928F31DBFCC3700D3D07A /* Assets.xcassets */,
+				698928F51DBFCC3700D3D07A /* LaunchScreen.storyboard */,
+				693C003C1DC14C4A00E2EA90 /* Yachtify-Bridging-Header.h */,
+				698928F81DBFCC3700D3D07A /* Info.plist */,
+			);
+			path = Yachtify;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		698928E81DBFCC3600D3D07A /* Yachtify */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 698928FB1DBFCC3700D3D07A /* Build configuration list for PBXNativeTarget "Yachtify" */;
+			buildPhases = (
+				48B37FB6A83AD60301B66558 /* [CP] Check Pods Manifest.lock */,
+				698928E51DBFCC3600D3D07A /* Sources */,
+				698928E61DBFCC3600D3D07A /* Frameworks */,
+				698928E71DBFCC3600D3D07A /* Resources */,
+				A0BF94B72D9F2B0E9D5B3989 /* [CP] Embed Pods Frameworks */,
+				FDC6C83A10C1680CEE5F86EC /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Yachtify;
+			productName = Yachtify;
+			productReference = 698928E91DBFCC3700D3D07A /* Yachtify.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		698928E11DBFCC3600D3D07A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Often;
+				TargetAttributes = {
+					698928E81DBFCC3600D3D07A = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = VPYJKM228K;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 698928E41DBFCC3600D3D07A /* Build configuration list for PBXProject "Yachtify" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 698928E01DBFCC3600D3D07A;
+			productRefGroup = 698928EA1DBFCC3700D3D07A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				698928E81DBFCC3600D3D07A /* Yachtify */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		698928E71DBFCC3600D3D07A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				698928F71DBFCC3700D3D07A /* LaunchScreen.storyboard in Resources */,
+				698928F41DBFCC3700D3D07A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		48B37FB6A83AD60301B66558 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A0BF94B72D9F2B0E9D5B3989 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Yachtify/Pods-Yachtify-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FDC6C83A10C1680CEE5F86EC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Yachtify/Pods-Yachtify-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		698928E51DBFCC3600D3D07A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69BCAB501DC2A43100F576A9 /* ShareOptionsView.swift in Sources */,
+				693C00431DC1500D00E2EA90 /* StickerCollectionViewCell.swift in Sources */,
+				69A87E011DC7CC76002334F9 /* PhotoOptionsView.swift in Sources */,
+				693C003B1DC14BC900E2EA90 /* StickerOptionsView.swift in Sources */,
+				698928ED1DBFCC3700D3D07A /* AppDelegate.swift in Sources */,
+				693C00411DC14FFB00E2EA90 /* StickersCollectionViewController.swift in Sources */,
+				69C7C6341DC1D0D5002162E9 /* UILabel+AttributedText.swift in Sources */,
+				693C003F1DC14C4B00E2EA90 /* UIColor+HEXString.m in Sources */,
+				693C00391DC1483E00E2EA90 /* CreationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		698928F51DBFCC3700D3D07A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				698928F61DBFCC3700D3D07A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		698928F91DBFCC3700D3D07A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		698928FA1DBFCC3700D3D07A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		698928FC1DBFCC3700D3D07A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0758431278169F42FDB0492 /* Pods-Yachtify.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = VPYJKM228K;
+				INFOPLIST_FILE = Yachtify/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tryoften.Yachtify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Yachtify/Yachtify-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		698928FD1DBFCC3700D3D07A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B712E55E3D8A690F3E447AD9 /* Pods-Yachtify.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = VPYJKM228K;
+				INFOPLIST_FILE = Yachtify/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tryoften.Yachtify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Yachtify/Yachtify-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		698928E41DBFCC3600D3D07A /* Build configuration list for PBXProject "Yachtify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				698928F91DBFCC3700D3D07A /* Debug */,
+				698928FA1DBFCC3700D3D07A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		698928FB1DBFCC3700D3D07A /* Build configuration list for PBXNativeTarget "Yachtify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				698928FC1DBFCC3700D3D07A /* Debug */,
+				698928FD1DBFCC3700D3D07A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 698928E11DBFCC3600D3D07A /* Project object */;
+}

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6910C1F21DDA8BD300BEAACC /* MessageOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6910C1F11DDA8BD300BEAACC /* MessageOverlayView.swift */; };
 		693C00391DC1483E00E2EA90 /* CreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693C00381DC1483E00E2EA90 /* CreationViewController.swift */; };
 		693C003B1DC14BC900E2EA90 /* StickerOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693C003A1DC14BC900E2EA90 /* StickerOptionsView.swift */; };
 		693C003F1DC14C4B00E2EA90 /* UIColor+HEXString.m in Sources */ = {isa = PBXBuildFile; fileRef = 693C003E1DC14C4B00E2EA90 /* UIColor+HEXString.m */; };
@@ -15,6 +16,7 @@
 		698928ED1DBFCC3700D3D07A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698928EC1DBFCC3700D3D07A /* AppDelegate.swift */; };
 		698928F41DBFCC3700D3D07A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 698928F31DBFCC3700D3D07A /* Assets.xcassets */; };
 		698928F71DBFCC3700D3D07A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 698928F51DBFCC3700D3D07A /* LaunchScreen.storyboard */; };
+		6997F84B1DD612F100B7B9C4 /* HUDProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6997F84A1DD612F100B7B9C4 /* HUDProgressView.swift */; };
 		69A87E011DC7CC76002334F9 /* PhotoOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A87E001DC7CC76002334F9 /* PhotoOptionsView.swift */; };
 		69BCAB501DC2A43100F576A9 /* ShareOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BCAB4F1DC2A43100F576A9 /* ShareOptionsView.swift */; };
 		69C7C6341DC1D0D5002162E9 /* UILabel+AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C7C6331DC1D0D5002162E9 /* UILabel+AttributedText.swift */; };
@@ -23,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		040A98E71DC0EECE6A56DCE6 /* Pods_Yachtify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yachtify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6910C1F11DDA8BD300BEAACC /* MessageOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageOverlayView.swift; sourceTree = "<group>"; };
 		693C00381DC1483E00E2EA90 /* CreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationViewController.swift; sourceTree = "<group>"; };
 		693C003A1DC14BC900E2EA90 /* StickerOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerOptionsView.swift; sourceTree = "<group>"; };
 		693C003C1DC14C4A00E2EA90 /* Yachtify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yachtify-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -35,6 +38,7 @@
 		698928F31DBFCC3700D3D07A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		698928F61DBFCC3700D3D07A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		698928F81DBFCC3700D3D07A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6997F84A1DD612F100B7B9C4 /* HUDProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDProgressView.swift; sourceTree = "<group>"; };
 		69A87E001DC7CC76002334F9 /* PhotoOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoOptionsView.swift; sourceTree = "<group>"; };
 		69BCAB4F1DC2A43100F576A9 /* ShareOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareOptionsView.swift; sourceTree = "<group>"; };
 		69C7C6331DC1D0D5002162E9 /* UILabel+AttributedText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+AttributedText.swift"; sourceTree = "<group>"; };
@@ -78,6 +82,8 @@
 				693C003A1DC14BC900E2EA90 /* StickerOptionsView.swift */,
 				69A87E001DC7CC76002334F9 /* PhotoOptionsView.swift */,
 				69BCAB4F1DC2A43100F576A9 /* ShareOptionsView.swift */,
+				6997F84A1DD612F100B7B9C4 /* HUDProgressView.swift */,
+				6910C1F11DDA8BD300BEAACC /* MessageOverlayView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -169,7 +175,7 @@
 				TargetAttributes = {
 					698928E81DBFCC3600D3D07A = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = VPYJKM228K;
+						DevelopmentTeam = G23SDK69HF;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
@@ -262,7 +268,9 @@
 				693C00431DC1500D00E2EA90 /* StickerCollectionViewCell.swift in Sources */,
 				69A87E011DC7CC76002334F9 /* PhotoOptionsView.swift in Sources */,
 				693C003B1DC14BC900E2EA90 /* StickerOptionsView.swift in Sources */,
+				6910C1F21DDA8BD300BEAACC /* MessageOverlayView.swift in Sources */,
 				698928ED1DBFCC3700D3D07A /* AppDelegate.swift in Sources */,
+				6997F84B1DD612F100B7B9C4 /* HUDProgressView.swift in Sources */,
 				693C00411DC14FFB00E2EA90 /* StickersCollectionViewController.swift in Sources */,
 				69C7C6341DC1D0D5002162E9 /* UILabel+AttributedText.swift in Sources */,
 				693C003F1DC14C4B00E2EA90 /* UIColor+HEXString.m in Sources */,
@@ -381,7 +389,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = VPYJKM228K;
+				DEVELOPMENT_TEAM = G23SDK69HF;
 				INFOPLIST_FILE = Yachtify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tryoften.Yachtify;
@@ -398,7 +406,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = VPYJKM228K;
+				DEVELOPMENT_TEAM = G23SDK69HF;
 				INFOPLIST_FILE = Yachtify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tryoften.Yachtify;

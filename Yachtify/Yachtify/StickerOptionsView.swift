@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import SnapKit
 
 class StickerOptionsView: UIView {
+    var messageOverlay: MessageOverlayView
     var titleLabel: UILabel
     var redoButton: UIButton
     var shareButton: UIButton
@@ -17,6 +19,9 @@ class StickerOptionsView: UIView {
     var stickerCollectionView: StickersCollectionViewController
     
     override init(frame: CGRect) {
+        messageOverlay = MessageOverlayView()
+        messageOverlay.translatesAutoresizingMaskIntoConstraints = false
+        
         titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = .center
@@ -67,8 +72,15 @@ class StickerOptionsView: UIView {
         addSubview(appShareButton)
         addSubview(feedbackButton)
         addSubview(stickerCollectionView.view)
+        addSubview(messageOverlay)
         
         setupLayout()
+        
+        if UserDefaults.standard.bool(forKey: "hasSeenTip") == true {
+            messageOverlay.removeFromSuperview()
+        }
+        
+        UserDefaults.standard.set(true, forKey: "hasSeenTip")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -106,6 +118,13 @@ class StickerOptionsView: UIView {
             make.right.equalTo(snp.right)
             make.height.equalTo(150.0)
             make.centerY.equalTo(snp.centerY)
+        })
+        
+        messageOverlay.snp.makeConstraints({ make in
+            make.left.equalTo(snp.left)
+            make.right.equalTo(snp.right)
+            make.top.equalTo(snp.top)
+            make.bottom.equalTo(snp.bottom)
         })
     }
 }

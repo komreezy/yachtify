@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>PKHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Yachtify.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2AB93363A5D7EDE174F1035481F43FF9</key>
+		<key>7777683772235F0843A80FC41AD27341</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AFC26B0B13DDD58CEC8DF13075AFFD7F</key>
+		<key>CB7431C4A05D0B5F72F8FA3A35DB5D9E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F6F0516F82D07656D12F1C0716898F73</key>
 		<dict>
 			<key>primary</key>
 			<true/>

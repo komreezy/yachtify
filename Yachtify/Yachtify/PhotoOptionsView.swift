@@ -27,6 +27,8 @@ class PhotoOptionsView: UIView {
         
         photosButton = UIButton()
         photosButton.translatesAutoresizingMaskIntoConstraints = false
+        photosButton.imageView?.contentMode = .scaleAspectFill
+        photosButton.imageView?.layer.cornerRadius = 3.0
         photosButton.setImage(UIImage(named: "photos"), for: .normal)
         
         cameraFlipButton = UIButton()

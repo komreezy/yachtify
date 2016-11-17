@@ -11,6 +11,8 @@ import SnapKit
 import Social
 import MessageUI
 import AVFoundation
+import PKHUD
+import Photos
 
 class CreationViewController: UIViewController,
 UIImagePickerControllerDelegate,
@@ -62,7 +64,7 @@ MFMessageComposeViewControllerDelegate {
         }
     }
     
-    init() {
+    init() {        
         imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -113,8 +115,19 @@ MFMessageComposeViewControllerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        fetchPhotoThumbnail()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        PKHUD.sharedHUD.contentView = HUDProgressView(image: nil, title: "yachtify-loader", subtitle: nil)
+        PKHUD.sharedHUD.show()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
-        if !imagePicked {
+        if !imagePicked && state == .photo {
             setupSession(position: currentCameraPosition)
         }
     }
@@ -158,6 +171,8 @@ MFMessageComposeViewControllerDelegate {
         guard let preview = self.previewLayer else {
             return
         }
+        
+        PKHUD.sharedHUD.hide()
         
         view.layer.addSublayer(preview)
         captureSession.startRunning()
@@ -213,6 +228,11 @@ MFMessageComposeViewControllerDelegate {
         picker.dismiss(animated: true, completion: nil)
     }
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+        PKHUD.sharedHUD.show()
+    }
+    
     func toggleCamera() {
         let newPosition = currentCameraPosition ==  AVCaptureDevicePosition.back ? AVCaptureDevicePosition.front : AVCaptureDevicePosition.back
         
@@ -259,6 +279,12 @@ MFMessageComposeViewControllerDelegate {
         let imageData = UIImageJPEGRepresentation(getCurrentImage(), 0.6)
         let compressedJPEG = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compressedJPEG!, nil, nil, nil)
+        
+        PKHUD.sharedHUD.contentView = HUDProgressView(image: nil, title: "checkmark", subtitle: nil)
+        PKHUD.sharedHUD.show()
+        var timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { timer in
+            PKHUD.sharedHUD.hide()
+        })
     }
     
     func backButtonDidTap() {
@@ -271,6 +297,7 @@ MFMessageComposeViewControllerDelegate {
     
     func cancelButtonDidTap() {
         imageView.image = UIImage()
+        currentStickerView.image = UIImage()
         setupSession(position: .back)
         state = .photo
     }
@@ -300,7 +327,7 @@ MFMessageComposeViewControllerDelegate {
     }
     
     func shareWithFriendsDidTap() {
-        let shareSheet = UIActivityViewController(activityItems: ["Download Yachtify here! "], applicationActivities: nil)
+        let shareSheet = UIActivityViewController(activityItems: ["Check out Yachtify here! http://itunes.apple.com/app/id1176353449"], applicationActivities: nil)
         present(shareSheet, animated: true, completion: nil)
     }
     
@@ -375,9 +402,49 @@ MFMessageComposeViewControllerDelegate {
     }
     
     func shareWithInstagram(image: UIImage) {
-        
+        saveImageToLibrary()
+        let instagramHooks = "instagram://"
+        let instagramUrl = NSURL(string: instagramHooks)
+        if UIApplication.shared.canOpenURL(instagramUrl! as URL)
+        {
+            UIApplication.shared.openURL(instagramUrl! as URL)
+            
+        } else {
+            //redirect to safari because the user doesn't have Instagram
+            UIApplication.shared.openURL(NSURL(string: "http://instagram.com/")! as URL)
+        }
     }
     
+    func dismissOverlayView() {
+        stickerOptionsView.messageOverlay.alpha = 0
+        stickerOptionsView.messageOverlay.removeFromSuperview()
+    }
+    
+    // MARK: Setting the camera roll thumbnail
+    
+    func fetchPhotoThumbnail() {
+        let imageManager = PHImageManager.default()
+        
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = true
+        
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: true)]
+        
+        let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+
+        guard fetchResult.count > 0 else {
+            return
+        }
+        
+        imageManager.requestImage(for: fetchResult.object(at: fetchResult.count - 1) as PHAsset,
+                                targetSize: view.frame.size,
+                                contentMode: .aspectFit,
+                                options: requestOptions,
+                                resultHandler: { (image, _) in
+            self.photoOptionsView.photosButton.setImage(image, for: .normal)
+        })
+    }
     // MARK: MFMailComposeViewControllerDelegate - (Does not work in Simulator)
     
     func launchEmail(_ sender: AnyObject) {
@@ -414,6 +481,9 @@ MFMessageComposeViewControllerDelegate {
         addTargetsForPhotoView()
         addTargetsForStickerView()
         addTargetsForShareView()
+        stickerOptionsView.messageOverlay.dismissButton.addTarget(self,
+                                               action: #selector(CreationViewController.dismissOverlayView),
+                                               for: .touchUpInside)
     }
     
     func addTargetsForPhotoView() {

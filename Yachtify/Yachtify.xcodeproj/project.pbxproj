@@ -20,6 +20,7 @@
 		69A87E011DC7CC76002334F9 /* PhotoOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A87E001DC7CC76002334F9 /* PhotoOptionsView.swift */; };
 		69BCAB501DC2A43100F576A9 /* ShareOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BCAB4F1DC2A43100F576A9 /* ShareOptionsView.swift */; };
 		69C7C6341DC1D0D5002162E9 /* UILabel+AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C7C6331DC1D0D5002162E9 /* UILabel+AttributedText.swift */; };
+		69D413501DDE4F0E00C85D55 /* UIDevice+DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D4134F1DDE4F0E00C85D55 /* UIDevice+DeviceList.swift */; };
 		BF51C71DA21425327F2B7D6A /* Pods_Yachtify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 040A98E71DC0EECE6A56DCE6 /* Pods_Yachtify.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		69A87E001DC7CC76002334F9 /* PhotoOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoOptionsView.swift; sourceTree = "<group>"; };
 		69BCAB4F1DC2A43100F576A9 /* ShareOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareOptionsView.swift; sourceTree = "<group>"; };
 		69C7C6331DC1D0D5002162E9 /* UILabel+AttributedText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+AttributedText.swift"; sourceTree = "<group>"; };
+		69D4134F1DDE4F0E00C85D55 /* UIDevice+DeviceList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceList.swift"; sourceTree = "<group>"; };
 		A0758431278169F42FDB0492 /* Pods-Yachtify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yachtify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yachtify/Pods-Yachtify.debug.xcconfig"; sourceTree = "<group>"; };
 		B712E55E3D8A690F3E447AD9 /* Pods-Yachtify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yachtify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yachtify/Pods-Yachtify.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +96,7 @@
 				693C003D1DC14C4B00E2EA90 /* UIColor+HEXString.h */,
 				693C003E1DC14C4B00E2EA90 /* UIColor+HEXString.m */,
 				69C7C6331DC1D0D5002162E9 /* UILabel+AttributedText.swift */,
+				69D4134F1DDE4F0E00C85D55 /* UIDevice+DeviceList.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -175,7 +178,7 @@
 				TargetAttributes = {
 					698928E81DBFCC3600D3D07A = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = G23SDK69HF;
+						DevelopmentTeam = VPYJKM228K;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
@@ -265,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				69BCAB501DC2A43100F576A9 /* ShareOptionsView.swift in Sources */,
+				69D413501DDE4F0E00C85D55 /* UIDevice+DeviceList.swift in Sources */,
 				693C00431DC1500D00E2EA90 /* StickerCollectionViewCell.swift in Sources */,
 				69A87E011DC7CC76002334F9 /* PhotoOptionsView.swift in Sources */,
 				693C003B1DC14BC900E2EA90 /* StickerOptionsView.swift in Sources */,
@@ -389,10 +393,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = G23SDK69HF;
+				DEVELOPMENT_TEAM = VPYJKM228K;
 				INFOPLIST_FILE = Yachtify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tryoften.Yachtify;
+				PRODUCT_BUNDLE_IDENTIFIER = Yachtify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yachtify/Yachtify-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -406,10 +410,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = G23SDK69HF;
+				DEVELOPMENT_TEAM = VPYJKM228K;
 				INFOPLIST_FILE = Yachtify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tryoften.Yachtify;
+				PRODUCT_BUNDLE_IDENTIFIER = Yachtify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yachtify/Yachtify-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

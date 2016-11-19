@@ -13,9 +13,12 @@ private let stickerReuseIdentifier = "stickerCell"
 class StickersCollectionViewController: UICollectionViewController {
     weak var delegate: StickerImageSelectable?
     let hairs = [
-        UIImage(named: "hair")!,
+        UIImage(named: "hair1")!,
         UIImage(named: "hair2")!,
-        UIImage(named: "hair3")!
+        UIImage(named: "hair3")!,
+        UIImage(named: "hair4")!,
+        UIImage(named: "hair5")!,
+        UIImage(named: "hair6")!
     ]
     
     init() {

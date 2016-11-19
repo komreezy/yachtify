@@ -11,24 +11,35 @@ import PKHUD
 import SnapKit
 
 class HUDProgressView: PKHUDSquareBaseView {
-    static let defaultSquareBaseViewFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: 156.0, height: 156.0))
+    static let defaultSquareBaseViewFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: 125.0, height: 125.0))
+    var title: String = ""
+    var customImageView: UIImageView
     
     public override init(image: UIImage? = nil, title: String? = nil, subtitle: String? = nil) {
-        super.init(frame: HUDProgressView.defaultSquareBaseViewFrame)
+        customImageView = UIImageView()
+        customImageView.translatesAutoresizingMaskIntoConstraints = false
+        customImageView.alpha = 0.85
+        customImageView.clipsToBounds = true
+        customImageView.contentMode = .scaleAspectFit
         
-        if title == "yachtify-loader" {
-            imageView.image = UIImage.animatedImageNamed("yachtify-loader", duration: 1.1)
-        } else {
-            imageView.image = UIImage(named: "checkmark")
+        if let title = title {
+            self.title = title
         }
         
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.alpha = 1.0
-        imageView.contentMode = .scaleAspectFit
+        super.init(frame: HUDProgressView.defaultSquareBaseViewFrame)
+        
+        imageView.alpha = 0
+        
+        switch self.title {
+        case "yachtify-loader":
+            customImageView.image = UIImage.animatedImageNamed("yachtify-loader", duration: 1.0)
+        default:
+            customImageView.image = UIImage(named: "checkmark")
+        }
         
         backgroundColor = UIColor(fromHexString: "#202020")
         
-        addSubview(imageView)
+        addSubview(customImageView)
         
         setupLayout()
     }
@@ -38,11 +49,16 @@ class HUDProgressView: PKHUDSquareBaseView {
     }
     
     func setupLayout() {
-        imageView.snp.makeConstraints({ make in
+        customImageView.snp.makeConstraints({ make in
             make.centerX.equalTo(snp.centerX)
             make.centerY.equalTo(snp.centerY)
-            make.width.equalTo(200.0)
-            make.height.equalTo(70.0)
+            if title == "yachtify-loader" {
+                make.width.equalTo(220.0)
+                make.height.equalTo(72.0)
+            } else {
+                make.width.equalTo(60.0)
+                make.height.equalTo(60.0)
+            }
         })
     }
 }

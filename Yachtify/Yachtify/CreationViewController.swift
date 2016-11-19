@@ -32,6 +32,7 @@ MFMessageComposeViewControllerDelegate {
     var photoOptionsView: PhotoOptionsView
     var shareOptionsView: ShareOptionsView
     var currentStickerView: UIImageView
+    var watermarkLabel: UILabel
     var captureSession = AVCaptureSession()
     var captureDevice: AVCaptureDevice?
     var input: AVCaptureDeviceInput = AVCaptureDeviceInput()
@@ -43,15 +44,21 @@ MFMessageComposeViewControllerDelegate {
         didSet {
             switch state {
             case .photo:
+                watermarkLabel.alpha = 0
+                currentStickerView.isUserInteractionEnabled = true
                 imagePicked = false
                 photoOptionsView.isHidden = false
                 stickerOptionsView.isHidden = true
                 shareOptionsView.isHidden = true
             case .sticker:
+                watermarkLabel.alpha = 0
+                currentStickerView.isUserInteractionEnabled = true
                 photoOptionsView.isHidden = true
                 stickerOptionsView.isHidden = false
                 shareOptionsView.isHidden = true
             case .share:
+                watermarkLabel.alpha = 1
+                currentStickerView.isUserInteractionEnabled = false
                 photoOptionsView.isHidden = true
                 stickerOptionsView.isHidden = true
                 shareOptionsView.isHidden = false
@@ -68,6 +75,7 @@ MFMessageComposeViewControllerDelegate {
         imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .black
         
         currentStickerView = UIImageView()
         currentStickerView.contentMode = .scaleAspectFit
@@ -84,6 +92,15 @@ MFMessageComposeViewControllerDelegate {
         shareOptionsView = ShareOptionsView()
         shareOptionsView.translatesAutoresizingMaskIntoConstraints = false
         shareOptionsView.isHidden = true
+        
+        watermarkLabel = UILabel()
+        watermarkLabel.translatesAutoresizingMaskIntoConstraints = false
+        watermarkLabel.textAlignment = .center
+        watermarkLabel.alpha = 0
+        watermarkLabel.setTextWith(UIFont(name: "Avenir-Heavy", size: 18.0),
+                               letterSpacing: 1.0,
+                               color: .white,
+                               text: "yachtify".uppercased())
         
         identity = currentStickerView.transform
         
@@ -102,6 +119,7 @@ MFMessageComposeViewControllerDelegate {
         currentStickerView.gestureRecognizers = [panGesture]
         view.gestureRecognizers = [scaleGesture, rotateGesture]
         
+        imageView.addSubview(watermarkLabel)
         view.addSubview(imageView)
         view.addSubview(currentStickerView)
         view.addSubview(photoOptionsView)
@@ -188,7 +206,13 @@ MFMessageComposeViewControllerDelegate {
             guard sampleBuffer != nil && error == nil else { return }
             let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
             guard let image = UIImage(data: imageData!) else { return }
-            self.imageView.image = image
+            let mirroredImage = UIImage(cgImage: image.cgImage!, scale: image.scale, orientation: .leftMirrored)
+            
+            if self.currentCameraPosition == .back {
+                self.imageView.image = image
+            } else {
+                self.imageView.image = mirroredImage
+            }
             
             self.captureSession.stopRunning()
             self.previewLayer?.removeFromSuperlayer()
@@ -282,7 +306,7 @@ MFMessageComposeViewControllerDelegate {
         
         PKHUD.sharedHUD.contentView = HUDProgressView(image: nil, title: "checkmark", subtitle: nil)
         PKHUD.sharedHUD.show()
-        var timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { timer in
+        _ = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { _ in
             PKHUD.sharedHUD.hide()
         })
     }
@@ -357,6 +381,7 @@ MFMessageComposeViewControllerDelegate {
     }
     
     func shareWithiMessage(image: UIImage) {
+        watermarkLabel.alpha = 1
         let vc = MFMessageComposeViewController()
         if MFMessageComposeViewController.canSendText() {
             vc.addAttachmentData(UIImageJPEGRepresentation(image, 1)!,
@@ -376,8 +401,14 @@ MFMessageComposeViewControllerDelegate {
                 print("cancelled")
             case SLComposeViewControllerResult.done:
                 print("done")
+                DispatchQueue.main.async {
+                    PKHUD.sharedHUD.contentView = HUDProgressView(image: nil, title: "checkmark", subtitle: nil)
+                    PKHUD.sharedHUD.show()
+                    _ = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { _ in
+                        PKHUD.sharedHUD.hide()
+                    })
+                }
             }
-            self.dismiss(animated: true, completion: nil)
         }
         
         present(vc, animated: true, completion: nil)
@@ -393,9 +424,17 @@ MFMessageComposeViewControllerDelegate {
                 print("cancelled")
             case SLComposeViewControllerResult.done:
                 print("done")
+                DispatchQueue.main.async {
+                    PKHUD.sharedHUD.contentView = HUDProgressView(image: nil, title: "checkmark", subtitle: nil)
+                    PKHUD.sharedHUD.show()
+                    _ = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { _ in
+                        PKHUD.sharedHUD.hide()
+                    })
+                }
             }
             self.dismiss(animated: true, completion: nil)
         }
+        
         present(vc, animated: true, completion: nil)
         vc.setInitialText("Share to Facebook")
         vc.add(image)
@@ -405,8 +444,7 @@ MFMessageComposeViewControllerDelegate {
         saveImageToLibrary()
         let instagramHooks = "instagram://"
         let instagramUrl = NSURL(string: instagramHooks)
-        if UIApplication.shared.canOpenURL(instagramUrl! as URL)
-        {
+        if UIApplication.shared.canOpenURL(instagramUrl! as URL) {
             UIApplication.shared.openURL(instagramUrl! as URL)
             
         } else {
@@ -462,10 +500,27 @@ MFMessageComposeViewControllerDelegate {
         present(mc, animated: true, completion: nil)
     }
     
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result.rawValue {
+        case MessageComposeResult.cancelled.rawValue:
+            print("cancelled")
+        case MessageComposeResult.failed.rawValue:
+            print("failed")
+        case MessageComposeResult.sent.rawValue:
+            print("sent")
+        default:
+            break
+        }
+        
+        dismiss(animated: false, completion: nil)
+        PKHUD.sharedHUD.contentView = HUDProgressView(image: nil, title: "yachtify-loader", subtitle: nil)
+        PKHUD.sharedHUD.show()
+    }
+    
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         switch result.rawValue {
         case MessageComposeResult.cancelled.rawValue:
-            print("cencelled")
+            print("cancelled")
         case MessageComposeResult.failed.rawValue:
             print("failed")
         case MessageComposeResult.sent.rawValue:
@@ -518,28 +573,33 @@ MFMessageComposeViewControllerDelegate {
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.bottom.equalTo(view.snp.bottom)
-            make.top.equalTo(view.snp.centerY)
+            make.top.equalTo(imageView.snp.bottom)
         }
         
         stickerOptionsView.snp.makeConstraints { make in
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.bottom.equalTo(view.snp.bottom)
-            make.top.equalTo(view.snp.centerY)
+            make.top.equalTo(imageView.snp.bottom)
         }
         
         shareOptionsView.snp.makeConstraints { make in
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.bottom.equalTo(view.snp.bottom)
-            make.top.equalTo(view.snp.centerY)
+            make.top.equalTo(imageView.snp.bottom)
         }
         
         imageView.snp.makeConstraints({ make in
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
-            make.bottom.equalTo(view.snp.centerY)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.566465257)
             make.top.equalTo(view.snp.top)
+        })
+        
+        watermarkLabel.snp.makeConstraints({ make in
+            make.right.equalTo(imageView.snp.right).offset(-7.0)
+            make.bottom.equalTo(imageView.snp.bottom).offset(-7.0)
         })
     }
 }

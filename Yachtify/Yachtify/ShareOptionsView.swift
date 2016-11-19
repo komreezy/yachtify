@@ -37,7 +37,7 @@ class ShareOptionsView: UIView {
         ] as [String : Any]
         
         let backString = NSAttributedString(string: "back".uppercased(), attributes: attributes)
-        let cancelString = NSAttributedString(string: "cancel".uppercased(), attributes: attributes)
+        let cancelString = NSAttributedString(string: "finish".uppercased(), attributes: attributes)
         
         backButton = UIButton()
         backButton.translatesAutoresizingMaskIntoConstraints = false
@@ -111,23 +111,33 @@ class ShareOptionsView: UIView {
     
     func setupLayout() {
         let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
         let itemWidth = screenWidth * 0.25
         let itemHeight = screenWidth * 0.212
-        let bottomMargin = screenWidth * 0.21
+        var topMargin = screenHeight * 0.044809559
+        let bottomMargin = screenHeight * 0.02
+        let modelName = UIDevice.current.modelName
+        if modelName == "iPhone 5" ||
+            modelName == "iPhone 5c" ||
+            modelName == "iPhone 5s" ||
+            modelName == "iPod Touch 5" ||
+            modelName == "iPod Touch 6"{
+            topMargin -= 10
+        }
         
         titleLabel.snp.makeConstraints({ make in
-            make.top.equalTo(snp.top).offset(30.0)
+            make.top.equalTo(snp.top).offset(topMargin)
             make.centerX.equalTo(snp.centerX)
         })
         
         backButton.snp.makeConstraints({ make in
             make.left.equalTo(snp.left).offset(18.0)
-            make.top.equalTo(snp.top).offset(33.5)
+            make.top.equalTo(snp.top).offset(topMargin + 3.5)
         })
         
         cancelButton.snp.makeConstraints({ make in
             make.right.equalTo(snp.right).offset(-18.0)
-            make.top.equalTo(snp.top).offset(33.5)
+            make.top.equalTo(snp.top).offset(topMargin + 3.5)
         })
         
         messageButton.snp.makeConstraints({ make in
@@ -139,21 +149,21 @@ class ShareOptionsView: UIView {
         
         twitterButton.snp.makeConstraints({ make in
             make.left.equalTo(messageButton.snp.right)
-            make.centerY.equalTo(messageButton.snp.centerY)
+            make.bottom.equalTo(saveButton.snp.top).offset(-7.0)
             make.width.equalTo(itemWidth)
             make.height.equalTo(itemHeight)
         })
         
         facebookButton.snp.makeConstraints({ make in
             make.right.equalTo(instagramButton.snp.left)
-            make.centerY.equalTo(messageButton.snp.centerY)
+            make.bottom.equalTo(saveButton.snp.top).offset(-7.0)
             make.width.equalTo(itemWidth)
             make.height.equalTo(itemHeight)
         })
         
         instagramButton.snp.makeConstraints({ make in
             make.right.equalTo(snp.right)
-            make.centerY.equalTo(messageButton.snp.centerY)
+            make.bottom.equalTo(saveButton.snp.top).offset(-7.0)
             make.width.equalTo(itemWidth)
             make.height.equalTo(itemHeight)
         })
@@ -161,7 +171,7 @@ class ShareOptionsView: UIView {
         saveButton.snp.makeConstraints({ make in
             make.left.equalTo(messageButton.snp.left).offset(4.0)
             make.right.equalTo(instagramButton.snp.right).offset(-4.0)
-            make.bottom.equalTo(snp.bottom).offset(-bottomMargin)
+            make.bottom.equalTo(appShareButton.snp.top).offset(-bottomMargin)
             make.height.equalTo(itemHeight)
         })
         

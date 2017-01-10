@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: frame)
         
         if let window = self.window {
-            mainController = CreationViewController()
+            mainController = StickerViewController() //CreationViewController()
             window.rootViewController = mainController
             window.makeKeyAndVisible()
         }

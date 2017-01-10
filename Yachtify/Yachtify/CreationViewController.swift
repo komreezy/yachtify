@@ -66,11 +66,6 @@ UIGestureRecognizerDelegate {
             }
         }
     }
-    var identity: CGAffineTransform {
-        didSet {
-            currentStickerView.transform = identity
-        }
-    }
     
     init() {        
         imageView = UIImageView()
@@ -103,8 +98,6 @@ UIGestureRecognizerDelegate {
                                color: .white,
                                text: "yachtify".uppercased())
         
-        identity = currentStickerView.transform
-        
         super.init(nibName: nil, bundle: nil)
         
         addTargets()
@@ -116,8 +109,7 @@ UIGestureRecognizerDelegate {
         let rotateGesture = UIRotationGestureRecognizer(target: self,
                                                         action: #selector(CreationViewController.handleRotate(recognizer:)))
         
-        let gestureDelegate = MultipleGestureDelegate()
-        
+        panGesture.delegate = self
         scaleGesture.delegate = self
         rotateGesture.delegate = self
         

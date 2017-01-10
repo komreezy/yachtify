@@ -19,7 +19,8 @@ UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,
 StickerImageSelectable,
 MFMailComposeViewControllerDelegate,
-MFMessageComposeViewControllerDelegate {
+MFMessageComposeViewControllerDelegate,
+UIGestureRecognizerDelegate {
     
     enum CreationState {
         case photo
@@ -114,6 +115,11 @@ MFMessageComposeViewControllerDelegate {
                                                     action: #selector(CreationViewController.handleScale(recognizer:)))
         let rotateGesture = UIRotationGestureRecognizer(target: self,
                                                         action: #selector(CreationViewController.handleRotate(recognizer:)))
+        
+        let gestureDelegate = MultipleGestureDelegate()
+        
+        scaleGesture.delegate = self
+        rotateGesture.delegate = self
         
         stickerOptionsView.stickerCollectionView.delegate = self
         currentStickerView.gestureRecognizers = [panGesture]
@@ -483,6 +489,7 @@ MFMessageComposeViewControllerDelegate {
             self.photoOptionsView.photosButton.setImage(image, for: .normal)
         })
     }
+    
     // MARK: MFMailComposeViewControllerDelegate - (Does not work in Simulator)
     
     func launchEmail(_ sender: AnyObject) {
@@ -566,6 +573,20 @@ MFMessageComposeViewControllerDelegate {
         shareOptionsView.saveButton.addTarget(self, action: #selector(CreationViewController.saveImageToLibrary), for: .touchUpInside)
         shareOptionsView.appShareButton.addTarget(self, action: #selector(CreationViewController.shareWithFriendsDidTap), for: .touchUpInside)
         shareOptionsView.feedbackButton.addTarget(self, action: #selector(CreationViewController.feedbackDidTap), for: .touchUpInside)
+    }
+    
+    // MARK: UIGestureRecognizerDelegate
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return true
     }
     
     func setupLayout() {

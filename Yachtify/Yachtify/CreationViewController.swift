@@ -15,12 +15,12 @@ import PKHUD
 import Photos
 
 class CreationViewController: UIViewController,
-UIImagePickerControllerDelegate,
-UINavigationControllerDelegate,
-StickerImageSelectable,
-MFMailComposeViewControllerDelegate,
-MFMessageComposeViewControllerDelegate,
-UIGestureRecognizerDelegate {
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate,
+    StickerImageSelectable,
+    MFMailComposeViewControllerDelegate,
+    MFMessageComposeViewControllerDelegate,
+    UIGestureRecognizerDelegate {
     
     enum CreationState {
         case photo
@@ -32,7 +32,8 @@ UIGestureRecognizerDelegate {
     var stickerOptionsView: StickerOptionsView
     var photoOptionsView: PhotoOptionsView
     var shareOptionsView: ShareOptionsView
-    var currentStickerView: UIImageView
+    var trash: UIImageView
+    var stickers: [UIImageView] = []
     var watermarkLabel: UILabel
     var captureSession = AVCaptureSession()
     var captureDevice: AVCaptureDevice?
@@ -46,20 +47,20 @@ UIGestureRecognizerDelegate {
             switch state {
             case .photo:
                 watermarkLabel.alpha = 0
-                currentStickerView.isUserInteractionEnabled = true
+                setStickersUserInteraction(enabled: true)
                 imagePicked = false
                 photoOptionsView.isHidden = false
                 stickerOptionsView.isHidden = true
                 shareOptionsView.isHidden = true
             case .sticker:
                 watermarkLabel.alpha = 0
-                currentStickerView.isUserInteractionEnabled = true
+                setStickersUserInteraction(enabled: true)
                 photoOptionsView.isHidden = true
                 stickerOptionsView.isHidden = false
                 shareOptionsView.isHidden = true
             case .share:
                 watermarkLabel.alpha = 1
-                currentStickerView.isUserInteractionEnabled = false
+                setStickersUserInteraction(enabled: false)
                 photoOptionsView.isHidden = true
                 stickerOptionsView.isHidden = true
                 shareOptionsView.isHidden = false
@@ -67,16 +68,11 @@ UIGestureRecognizerDelegate {
         }
     }
     
-    init() {        
+    init() {
         imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .black
-        
-        currentStickerView = UIImageView()
-        currentStickerView.contentMode = .scaleAspectFit
-        currentStickerView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
-        currentStickerView.isUserInteractionEnabled = true
         
         photoOptionsView = PhotoOptionsView()
         photoOptionsView.translatesAutoresizingMaskIntoConstraints = false
@@ -94,9 +90,15 @@ UIGestureRecognizerDelegate {
         watermarkLabel.textAlignment = .center
         watermarkLabel.alpha = 0
         watermarkLabel.setTextWith(UIFont(name: "Avenir-Heavy", size: 18.0),
-                               letterSpacing: 1.0,
-                               color: .white,
-                               text: "yachtify".uppercased())
+                                   letterSpacing: 1.0,
+                                   color: .white,
+                                   text: "yachtify".uppercased())
+        
+        trash = UIImageView()
+        trash.translatesAutoresizingMaskIntoConstraints = false
+        trash.contentMode = .scaleAspectFit
+        trash.isHidden = true
+        trash.image = #imageLiteral(resourceName: "trash-can")
         
         super.init(nibName: nil, bundle: nil)
         
@@ -114,16 +116,15 @@ UIGestureRecognizerDelegate {
         rotateGesture.delegate = self
         
         stickerOptionsView.stickerCollectionView.delegate = self
-        currentStickerView.gestureRecognizers = [panGesture]
         view.gestureRecognizers = [scaleGesture, rotateGesture]
         
         imageView.addSubview(watermarkLabel)
         view.addSubview(imageView)
-        view.addSubview(currentStickerView)
+        view.addSubview(trash)
         view.addSubview(photoOptionsView)
         view.addSubview(stickerOptionsView)
         view.addSubview(shareOptionsView)
-
+        
         setupLayout()
     }
     
@@ -147,51 +148,56 @@ UIGestureRecognizerDelegate {
             setupSession(position: currentCameraPosition)
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     // MARK: Camera functionality & Setup
     
     func setupSession(position: AVCaptureDevicePosition) {
-        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
-        captureSession.removeInput(input)
-        captureSession.removeOutput(output)
+        PKHUD.sharedHUD.contentView = HUDProgressView(image: nil, title: "yachtify-loader", subtitle: nil)
+        PKHUD.sharedHUD.show()
         
-        let camera = AVCaptureDevice.defaultDevice(withDeviceType: AVCaptureDeviceType.builtInWideAngleCamera,
-                                                   mediaType: AVMediaTypeVideo,
-                                                   position: position)
-        do {
-            input = try AVCaptureDeviceInput(device: camera)
-        } catch {
-            return
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            self.captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+            self.captureSession.removeInput(self.input)
+            self.captureSession.removeOutput(self.output)
+            
+            self.captureDevice = AVCaptureDevice.defaultDevice(withDeviceType: AVCaptureDeviceType.builtInWideAngleCamera,
+                                                          mediaType: AVMediaTypeVideo,
+                                                          position: position)
+            do {
+                self.input = try AVCaptureDeviceInput(device: self.captureDevice)
+            } catch {
+                return
+            }
+            
+            self.output = AVCaptureStillImageOutput()
+            self.output.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
+            
+            guard self.captureSession.canAddInput(self.input) || self.captureSession.canAddOutput(self.output) else {
+                return
+            }
+            
+            self.captureSession.addInput(self.input)
+            self.captureSession.addOutput(self.output)
+            
+            self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+            self.previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+            self.previewLayer?.frame = self.imageView.frame
+            self.previewLayer?.connection?.videoOrientation = .portrait
+            
+            DispatchQueue.main.async { [unowned self] in
+                guard let preview = self.previewLayer else {
+                    return
+                }
+                
+                PKHUD.sharedHUD.hide()
+                self.view.layer.addSublayer(preview)
+                self.captureSession.startRunning()
+            }
         }
-        
-        output = AVCaptureStillImageOutput()
-        output.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
-        
-        guard captureSession.canAddInput(input) || captureSession.canAddOutput(output) else {
-            return
-        }
-        
-        captureSession.addInput(input)
-        captureSession.addOutput(output)
-        
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-        previewLayer?.frame = imageView.frame
-        previewLayer?.connection?.videoOrientation = .portrait
-        
-        guard let preview = self.previewLayer else {
-            return
-        }
-        
-        PKHUD.sharedHUD.hide()
-        
-        view.layer.addSublayer(preview)
-        captureSession.startRunning()
     }
     
     func captureImage() {
@@ -215,13 +221,14 @@ UIGestureRecognizerDelegate {
             self.captureSession.stopRunning()
             self.previewLayer?.removeFromSuperlayer()
             self.previewLayer = nil
+            self.captureDevice = nil
             self.state = .sticker
             self.imagePicked = true
         })
     }
     
     func getCurrentImage() -> UIImage {
-        UIGraphicsBeginImageContext(imageView.bounds.size)
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 0.0)
         view.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
@@ -259,8 +266,8 @@ UIGestureRecognizerDelegate {
         let newPosition = currentCameraPosition ==  AVCaptureDevicePosition.back ? AVCaptureDevicePosition.front : AVCaptureDevicePosition.back
         
         guard let camera = AVCaptureDevice.defaultDevice(withDeviceType: AVCaptureDeviceType.builtInWideAngleCamera,
-                                                   mediaType: AVMediaTypeVideo,
-                                                   position: newPosition) else { return }
+                                                         mediaType: AVMediaTypeVideo,
+                                                         position: newPosition) else { return }
         
         var deviceInput: AVCaptureDeviceInput!
         do {
@@ -286,7 +293,7 @@ UIGestureRecognizerDelegate {
         }
         
         do {
-           try camera.lockForConfiguration()
+            try camera.lockForConfiguration()
         } catch {
             return
         }
@@ -297,8 +304,38 @@ UIGestureRecognizerDelegate {
         captureSession.commitConfiguration()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touchPoint = touches.first
+        let screenSize = view.bounds.size
+        
+        guard let point = touchPoint?.location(in: view),
+            imageView.frame.contains(point) else { return }
+        
+        let focusPoint = CGPoint(x: point.y / screenSize.height, y: 1.0 - point.x / screenSize.width)
+        
+        if let device = captureDevice {
+            do {
+                try device.lockForConfiguration()
+                
+                if device.isFocusPointOfInterestSupported {
+                    device.focusPointOfInterest = focusPoint
+                    device.focusMode = .autoFocus
+                }
+                
+                if device.isExposurePointOfInterestSupported {
+                    device.exposurePointOfInterest = focusPoint
+                    device.exposureMode = .autoExpose
+                }
+                
+                device.unlockForConfiguration()
+            } catch {
+                return
+            }
+        }
+    }
+    
     func saveImageToLibrary() {
-        let imageData = UIImageJPEGRepresentation(getCurrentImage(), 0.6)
+        let imageData = UIImageJPEGRepresentation(getCurrentImage(), 1.0)
         let compressedJPEG = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compressedJPEG!, nil, nil, nil)
         
@@ -319,33 +356,113 @@ UIGestureRecognizerDelegate {
     
     func cancelButtonDidTap() {
         imageView.image = UIImage()
-        currentStickerView.image = UIImage()
-        setupSession(position: .back)
+        removeAllStickers()
+        setupSession(position: currentCameraPosition)
         state = .photo
+    }
+    
+    func removeAllStickers() {
+        for sticker in stickers {
+            sticker.removeFromSuperview()
+        }
+        
+        stickers.removeAll()
+    }
+    
+    func setStickersUserInteraction(enabled: Bool) {
+        for sticker in stickers {
+            sticker.isUserInteractionEnabled = enabled
+        }
+    }
+    
+    func remove(image: UIView) {
+        for (index, sticker) in zip(stickers.indices, stickers) {
+            if sticker == image {
+                sticker.removeFromSuperview()
+                stickers.remove(at: index)
+            }
+        }
+    }
+    
+    func addSticker(with image: UIImage) {
+        // create sticker view
+        let sticker = UIImageView()
+        sticker.contentMode = .scaleAspectFit
+        sticker.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        sticker.center = imageView.center
+        sticker.isUserInteractionEnabled = true
+        sticker.image = image
+        
+        let panGesture = UIPanGestureRecognizer(target: self,
+                                                action: #selector(CreationViewController.handleImagePan(recognizer:)))
+        panGesture.delegate = self
+        sticker.gestureRecognizers = [panGesture]
+        
+        stickers.append(sticker)
+        view.insertSubview(sticker, belowSubview: trash)
     }
     
     // MARK: Handle Hair image resizing and positioning
     
     func handleImagePan(recognizer: UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: self.view)
-        if let view = recognizer.view {
-            view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
+        // unhide the trash can with animation
+        if recognizer.state == .changed {
+            trash.isHidden = false
+            
+            let translation = recognizer.translation(in: self.view)
+            if let view = recognizer.view {
+                view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
+                if trash.frame.contains(CGPoint(x: view.center.x, y: view.center.y - 10.0)) {
+                    UIView.animate(withDuration: 0.25) { [unowned self] in
+                        self.trash.transform = CGAffineTransform(scaleX: 1.25, y: 1.25)
+                        view.alpha = 0.5
+                    }
+                } else {
+                    UIView.animate(withDuration: 0.25) { [unowned self] in
+                        self.trash.transform = .identity
+                        view.alpha = 1.0
+                    }
+                }
+            }
+            recognizer.setTranslation(CGPoint.zero, in: self.view)
         }
-        recognizer.setTranslation(CGPoint.zero, in: self.view)
+        
+        // if the image view is on the trash can then remove it & hide trash can
+        if recognizer.state == .ended {
+            if let view = recognizer.view {
+                if trash.frame.contains(CGPoint(x: view.center.x, y: view.center.y - 10.0)) {
+                    remove(image: view)
+                }
+            }
+            
+            trash.isHidden = true
+        }
     }
     
     func handleScale(recognizer: UIPinchGestureRecognizer) {
-        currentStickerView.transform = currentStickerView.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
+        let point = recognizer.location(in: view)
+        guard let sticker = view.hitTest(point, with: nil),
+            sticker != self.view else {
+                return
+        }
+        
+        sticker.transform = sticker.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
         recognizer.scale = 1
     }
     
     func handleRotate(recognizer: UIRotationGestureRecognizer) {
-        currentStickerView.transform = currentStickerView.transform.rotated(by: recognizer.rotation)
+        let point = recognizer.location(in: view)
+        guard let sticker = view.hitTest(point, with: nil),
+            sticker != self.view else {
+                return
+        }
+        
+        sticker.transform = sticker.transform.rotated(by: recognizer.rotation)
         recognizer.rotation = 0
     }
     
     func didSelectSticker(image: UIImage) {
-        currentStickerView.image = image
+        addSticker(with: image)
     }
     
     func shareWithFriendsDidTap() {
@@ -468,17 +585,17 @@ UIGestureRecognizerDelegate {
         fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: true)]
         
         let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-
+        
         guard fetchResult.count > 0 else {
             return
         }
         
         imageManager.requestImage(for: fetchResult.object(at: fetchResult.count - 1) as PHAsset,
-                                targetSize: view.frame.size,
-                                contentMode: .aspectFit,
-                                options: requestOptions,
-                                resultHandler: { (image, _) in
-            self.photoOptionsView.photosButton.setImage(image, for: .normal)
+                                  targetSize: view.frame.size,
+                                  contentMode: .aspectFit,
+                                  options: requestOptions,
+                                  resultHandler: { (image, _) in
+                                    self.photoOptionsView.photosButton.setImage(image, for: .normal)
         })
     }
     
@@ -500,44 +617,18 @@ UIGestureRecognizerDelegate {
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        switch result.rawValue {
-        case MessageComposeResult.cancelled.rawValue:
-            print("cancelled")
-        case MessageComposeResult.failed.rawValue:
-            print("failed")
-        case MessageComposeResult.sent.rawValue:
-            print("sent")
-        default:
-            break
-        }
-        
-        dismiss(animated: false, completion: nil)
-        PKHUD.sharedHUD.contentView = HUDProgressView(image: nil, title: "yachtify-loader", subtitle: nil)
-        PKHUD.sharedHUD.show()
+        dismiss(animated: true, completion: nil)
     }
     
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        switch result.rawValue {
-        case MessageComposeResult.cancelled.rawValue:
-            print("cancelled")
-        case MessageComposeResult.failed.rawValue:
-            print("failed")
-        case MessageComposeResult.sent.rawValue:
-            print("sent")
-        default:
-            break
-        }
-        
-        dismiss(animated: false, completion: nil)
-    }
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {  }
     
     func addTargets() {
         addTargetsForPhotoView()
         addTargetsForStickerView()
         addTargetsForShareView()
         stickerOptionsView.messageOverlay.dismissButton.addTarget(self,
-                                               action: #selector(CreationViewController.dismissOverlayView),
-                                               for: .touchUpInside)
+                                                                  action: #selector(CreationViewController.dismissOverlayView),
+                                                                  for: .touchUpInside)
     }
     
     func addTargetsForPhotoView() {
@@ -610,9 +701,16 @@ UIGestureRecognizerDelegate {
             make.top.equalTo(view.snp.top)
         })
         
-        watermarkLabel.snp.makeConstraints({ make in
+        trash.snp.makeConstraints { make in
+            make.left.equalTo(view.snp.left).offset(15.0)
+            make.top.equalTo(view.snp.top).offset(15.0)
+            make.height.equalTo(35.0)
+            make.width.equalTo(35.0)
+        }
+        
+        watermarkLabel.snp.makeConstraints { make in
             make.right.equalTo(imageView.snp.right).offset(-7.0)
             make.bottom.equalTo(imageView.snp.bottom).offset(-7.0)
-        })
+        }
     }
 }
